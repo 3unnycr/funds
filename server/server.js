@@ -20,7 +20,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(errorHandler);
-// app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/authRoute'));
 // app.use('/api/user', require('./routes/user'));
 // app.use('/api/superintendent', require('./routes/superintendent'));
 // ================= Express Setting for server ===================== //
