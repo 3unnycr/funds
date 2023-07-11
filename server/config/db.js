@@ -1,7 +1,11 @@
-const moongoose = require("moongoose");
+const mongoose = require("mongoose");
 
 const connectDB = async (url) => {
-  await moongoose.connect(url);
+  
+  await mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
 
   console.log("Database Connected.");
 };
