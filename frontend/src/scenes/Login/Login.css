@@ -1,0 +1,35 @@
+.loginbg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100vh;
+  background: url("./loginbg.jpg");
+  background-size: cover;
+}
+
+.logindiv{
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 8px 32px 0px rgba(0, 0 , 255, 0);
+  backdrop-filter: blur(3px);
+  width: 350px;
+  border-radius: 0px 20px 0px 20px;
+}
+.loginlogo{
+  height: 40px;
+  width: auto;
+}
+.rightaligndiv{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.loginbanner{
+  width: 350px;
+  height: auto;
+  border-radius: 0px 20px 0px 0px;
+}
+.loginwrap{
+  padding: 20px;
+  border-radius: 0px 0px 0px 20px;
+}

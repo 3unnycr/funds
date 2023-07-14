@@ -45,20 +45,20 @@ exports.login = async(req, res, next) => {
   password = sanitize(password);
 
   if(!email || !password){
-    return next(new ErrorResponse("Please enter email and password!", 400));
+    return res.status(400).json({success: false, error: "Please enter email and password!"})
   }
 
   try{
     const user = await User.findOne({ email }).select("+password");
 
     if(!user){
-      return next(new ErrorResponse("Email id not found!", 404));
+      return res.status(404).json({success: false, error: "Email id not found!"});
     }
 
     const isMatch = await user.matchPassword(password);
 
     if(!isMatch){
-      return next(new ErrorResponse("Invalid password!", 401));
+      return res.status(401).json({success: false, error: "Invalid password!"});
     }
 
     return sendToken(user, 201, res);
@@ -76,7 +76,7 @@ exports.forgotpassword = async (req, res, next) => {
     const user = await User.findOne({email});
 
     if(!user){
-      return next(new ErrorResponse("Email could not be sent", 404));
+      return res.status(404).json({success: false, error: "Email id is invalid or not register to inofunds!"});
     }
     const resetToken = user.getResetPasswordToken();
 
@@ -100,7 +100,7 @@ exports.forgotpassword = async (req, res, next) => {
 
       await user.save();
 
-      return next(new ErrorResponse("Email could not be send", 500))
+      return next(new ErrorResponse("Email could not be send try after some time!", 500))
     }
 
   } catch(error) {
@@ -116,7 +116,7 @@ exports.resetpassword = async (req, res, next) => {
       resetPasswordExpire: {$gt: Date.now()}
     })
     if(!user){
-      return next(new ErrorResponse("Invalid Reset Token", 400));
+      return res.status(400).json({success: false, error: "Invalid reset token or token is expired!"});
     }
     user.password = req.body.password;
     user.resetPasswordToken = undefined;
@@ -141,7 +141,7 @@ exports.otpSend = async (req, res, next) => {
         _id: res.user._id
       })
       if(!user){
-        return next(new ErrorResponse("Invalid Token", 400));
+        return res.status(400).json({success: false, error: "Invalid token or token is expired!"});
       }
       // const message = verify_email(otpno);
       //   await sendEmail({
@@ -168,7 +168,7 @@ exports.otpSendWithdrawal = async (req, res, next) => {
         _id: res.user._id
       })
       if(!user){
-        return next(new ErrorResponse("Invalid Token", 400));
+        return res.status(400).json({success: false, error: "Invalid token or token is expired!"});
       }
       // const message = withdraw_verify_email(otpno);
       //   await sendEmail({
@@ -193,7 +193,7 @@ exports.otpVerification = async (req, res, next) => {
       _id: res.user._id
     })
     if(!user){
-      return next(new ErrorResponse("Invalid Token", 400));
+        return res.status(400).json({success: false, error: "Invalid token or token is expired!"});
     }
     const decipher = crypto.createDecipher(algorithm, process.env.ENCRYPT_SECRET);
     let decryptedData = decipher.update(user.otp, "hex", "utf-8");
