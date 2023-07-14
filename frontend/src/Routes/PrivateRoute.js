@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useEffect, useState} from "react";
-import Spinner from "../Spinner";
+import Spinner from "../components/Spinner";
 import axios from "axios";
 const PrivateRoute = () => {
 let  auth = sessionStorage.getItem("token");

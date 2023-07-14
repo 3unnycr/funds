@@ -18,10 +18,6 @@ function App() {
           <Route path="/passwordreset/:token" element={<PasswordReset />} />
           <Route element={<PrivateRoute />}>
               <Route path="/user/dashboard" element={<Dashboard />} />
-              <Route path="/user/smartstake" element={<Smartstake />} />
-              <Route path="/user/stake" element={<Stake />} />
-              <Route path="/user/profile" element={<Profile />} />
-              <Route path="/user/kyc" element={<Kyc />} />
           </Route>
         </Routes>
     </div>
