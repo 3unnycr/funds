@@ -25,7 +25,7 @@ const LoginForm = () => {
   }
   if(isSuccess){
     sessionStorage.setItem("token", data.token);
-    window.location.href = "/dashboard";
+    window.location.href = "/authchecker";
   }
 
 

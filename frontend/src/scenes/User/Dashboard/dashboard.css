@@ -1,0 +1,25 @@
+.dashboardlogo{
+  height: 40px;
+}
+.sidebarlogodiv{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.useravatar{
+  height: 100px;
+  width: auto;
+}
+.headerbutton{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 5px;
+}
+.bgden{
+  background-color: #001529 !important;
+  color: #ffffff !important;
+}
+.ant-statistic-title{
+  color: #ffffff !important;
+}

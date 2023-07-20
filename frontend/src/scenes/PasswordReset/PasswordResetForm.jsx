@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {usePasswordResetMutation} from "../../store/api/authApi";
 import {Form, Input, SubmitButton} from "formik-antd";
-import { SendOutlined } from "@ant-design/icons";
+import { UndoOutlined } from "@ant-design/icons";
 
 const PasswordResetForm = (props) => {
     const [passwordReset, {data, isLoading, error, isError, isSuccess}] = usePasswordResetMutation();
@@ -73,8 +73,8 @@ const PasswordResetForm = (props) => {
           >
             <Input.Password name="confirm" placeholder="Confirm your new password" />
           </Form.Item>
-          <SubmitButton type="primary" loading={isLoading} icon={<SendOutlined />} disabled={false}>
-            Send Email
+          <SubmitButton type="primary" loading={isLoading} icon={<UndoOutlined />} disabled={false}>
+            Reset
           </SubmitButton>
         </Form>
       )}

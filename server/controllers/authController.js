@@ -45,7 +45,7 @@ exports.login = async(req, res, next) => {
   password = sanitize(password);
 
   if(!email || !password){
-    return res.status(400).json({success: false, error: "Please enter email and password!"})
+    return res.status(400).json({success: false, error: "Please enter email and password!"});
   }
 
   try{
@@ -99,8 +99,7 @@ exports.forgotpassword = async (req, res, next) => {
       user.resetPasswordExpire = undefined;
 
       await user.save();
-
-      return next(new ErrorResponse("Email could not be send try after some time!", 500))
+      return res.status(500).json({success: false, error: "Email could not be send try after some time!"});
     }
 
   } catch(error) {
@@ -204,7 +203,7 @@ exports.otpVerification = async (req, res, next) => {
       await User.updateOne({_id: user._id}, {$set : {email_verified_at: date}});
       return res.status(201).json({success: true, data: "Otp Verified!"});
     }else{
-      return next(new ErrorResponse("Incorrect Otp", 400));
+      return res.status(400).json({success: false, error: "Invalid Otp"});
     }
   }catch(error){
     next(error);

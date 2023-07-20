@@ -1,49 +1,54 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 // Define a service using a base URL and expected endpoints
 export const authApi = createApi({
-  reducerPath: 'authApi',
+  reducerPath: "authApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND_URL }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     loginUser: builder.mutation({
-      query: (body: {email: string; password: string}) => {
+      query: body => {
         return {
           url: "/api/auth/login",
           method: "post",
-          body,
+          body
         }
       }
     }),
     registerUser: builder.mutation({
-      query: (body: {firstname: string; lastname: string; email: string; password: string}) => {
+      query: body => {
         return {
           url: "/api/auth/register",
           method: "post",
-          body,
+          body
         }
-      },
+      }
     }),
     forgotPassword: builder.mutation({
-      query: (body: {email: string}) => {
+      query: body => {
         return {
           url: "/api/auth/forgotpassword",
           method: "post",
-          body,
+          body
         }
-      },
+      }
     }),
     passwordReset: builder.mutation({
-      query: (body: { password: string; confirm: string; resetToken: string}) => {
+      query: body => {
         return {
           url: `/api/auth/resetpassword/${body.resetToken}`,
           method: "put",
-          body,
+          body
         }
-      },
-    }),
-  }),
+      }
+    })
+  })
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useLoginUserMutation, useRegisterUserMutation, useForgotPasswordMutation, usePasswordResetMutation } = authApi;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useForgotPasswordMutation,
+  usePasswordResetMutation
+} = authApi

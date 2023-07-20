@@ -1,13 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit"
 
-export interface AuthState {
-  firstname: string | null;
-  lastname: string | null;
-  email: string | null;
-  token: string | null;
-}
-
-const initialState: AuthState = {
+const initialState = {
   firstname: null,
   lastname: null,
   email: null,
@@ -15,19 +8,19 @@ const initialState: AuthState = {
 }
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<AuthState>) => {
-      state.firstname = action.payload.firstname;
-      state.lastname = action.payload.lastname;
-      state.email = action.payload.email;
-      state.token = action.payload.token;
+    setUser: (state, action) => {
+      state.firstname = action.payload.firstname
+      state.lastname = action.payload.lastname
+      state.email = action.payload.email
+      state.token = action.payload.token
     },
-    defaultState:(state) => {
+    defaultState: state => {
       state = initialState;
-    },
-  },
+    }
+  }
 })
 
 // Action creators are generated for each case reducer function
