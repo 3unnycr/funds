@@ -5,7 +5,6 @@ import {CopyOutlined, SearchOutlined} from "@ant-design/icons";
 import moment from "moment";
 import copy from "copy-to-clipboard";
 import { toast } from 'react-toastify';
-
 const CfdTable = (props) => {
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
@@ -104,17 +103,16 @@ const CfdTable = (props) => {
 
   const handleCopyText = (e) => {
     copy(e);
-    toast.success("Contract Id copied: {" + e + "}", {
-    toastId: "error-cfd",
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme:"colored"
-    });
+      toast.success("Contract Id copied: {" + e + "}", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme:"colored"
+      });
   }
 
 
@@ -127,12 +125,12 @@ const CfdTable = (props) => {
     render: (text) => <span className={"ponin text-primary"} onClick={(e) => handleCopyText(text)} >{text} <CopyOutlined /></span>,
   },
   {
-    title: 'Amount',
+    title: 'Amount ($)',
     dataIndex: 'amount',
     sorter: (a, b) => a.amount - b.amount,
   },
   {
-    title: 'ROI',
+    title: 'ROI ($)',
     dataIndex: 'roi',
     sorter: (a, b) => a.roi - b.roi,
   },

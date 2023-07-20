@@ -1,6 +1,6 @@
 import React from "react";
 import {useEffect} from "react";
-import ScaleLoader from "react-spinners/ScaleLoader";
+import HashLoader from "react-spinners/HashLoader";
 import {setUser} from "../../../store/state/authSlice";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
@@ -11,7 +11,7 @@ const AuthChecker = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let loading= true;
-  let color = "#000000";
+  let color = "#2980b9";
 
   const user = async () => {
     await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/user/user`, {
@@ -25,10 +25,15 @@ const AuthChecker = () => {
       localStorage.setItem("lastname", resp.data.user.lastname);
       localStorage.setItem("email", resp.data.user.email);
       localStorage.setItem("token", resp.data.user.token);
-      navigate("/user/dashboard");
+
+      setTimeout(function(){
+        navigate("/user/dashboard");
+      }, 5000);
     }).catch((error) => {
       dispatch(defaultState());
-      window.location.href = "/login";
+      setTimeout(function(){
+        window.location.href = "/login";
+      }, 5000);
     });
  }
 
@@ -37,14 +42,21 @@ const AuthChecker = () => {
   });
   return (
     <>
-      <h1> Checking if connection is secure </h1>
-      <ScaleLoader
-        color={color}
-        loading={loading}
-        height={20}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-        />
+      <div className="loginbg">
+        <div className="logindiv p-5" >
+          <h5>Checking if connection is secure!  </h5>
+          <p>Please wait!</p>
+          <center>
+            <HashLoader
+              color={color}
+              loading={loading}
+              height={20}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+              />
+          </center>
+        </div>
+      </div>
     </>
   )
 }

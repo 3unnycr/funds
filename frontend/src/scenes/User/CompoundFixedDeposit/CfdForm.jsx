@@ -6,44 +6,42 @@ import {useAddCfdMutation} from "../../../store/api/cfdApi";
 import { toast } from 'react-toastify';
 const CfdForm = (props) => {
   const sessiontoken = sessionStorage.getItem("token");
-  const [addCfd , {data, isLoading, error, isError, isSuccess}] = useAddCfdMutation();
-
-  if(isError){
-      toast.error(error.data.error, {
-      toastId: "error-cfd",
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme:"colored"
-      });
-  }
-  if(isSuccess){
-      toast.success("CFD Created successfully! ContractId: {"+ data.contract + "}  Thankyou!", {
-      toastId: "success-cfd",
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme:"colored"
-      });
-  }
+  const [addCfd , { isLoading }] = useAddCfdMutation();
 
   return (
     <>
     <Formik
       initialValues={{amount: 50, token: sessiontoken}}
-      onSubmit={(values) => {
-        addCfd({...values});
-        setTimeout(function(){
+      onSubmit={async (values) => {
+        const result = await addCfd({...values});
+        console.log(result);
+        if (result.error){
+          toast.error(result.error.data.error, {
+          toastId: "error-cfd",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme:"colored"
+          });
+        }else{
+          toast.success("CFD Created successfully! ContractId: {"+ result.data.contract + "}  Thankyou!", {
+          toastId: "success-cfd",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme:"colored"
+          });
           props.onHandlegetdata();
-        }, 1000); 
+        }
+
       }}
       validate={values => {
           if (!values.amount) {
@@ -63,7 +61,7 @@ const CfdForm = (props) => {
             name="amount"
             hasFeedback={true} showValidateSuccess={true}
           >
-            <InputNumber name="amount" formatter={value => `$ ${value}`} style={{width: "100%"}}/>
+            <InputNumber name="amount" formatter={value => `$ ${value}`} onChange={(value) => props.setAmount(value)} style={{width: "100%"}}/>
           </Form.Item>
           <SubmitButton type="primary" loading={isLoading} disabled={false}>
             Make

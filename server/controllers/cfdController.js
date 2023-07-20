@@ -36,11 +36,11 @@ const { amount } = req.body;
   todaydate = await Date.now();
 
   if (amount <= 50.00){
-    return next(new ErrorResponse("Amount should be greater than 50 USD", 400));
+    return res.status(400).json({success: false, error: "Amount should be greater than 50 USD"});
   }
 
   if (amount > balance){
-        return next(new ErrorResponse("You have insuffencient balance!", 400));
+      return res.status(400).json({success: false, error: "You have insuffencient balance!"});
   }
   await Cfd.create({
     user_id: res.user._id, amount: amount, roi: 0.0, isReleased: false, withdrawals: 0, percent: 2, isActive: true, created_at: todaydate, updated_at: todaydate
@@ -49,7 +49,7 @@ const { amount } = req.body;
   let query = await Cfd.findOne({user_id: res.user._id}).limit(1).sort({$natural:-1});
 
   await Usd.create({
-    user_id: res.user._id, amount: amount, credit: false, detail: `Debited for your INO Funds ECP investment. Contract id [${query._id}]`
+    user_id: res.user._id, amount: amount, credit: false, detail: `Debited for your INO Funds CFD investment. Contract id [${query._id}]`
   });
 
   return res.status(200).json({success: true, contract: query._id});

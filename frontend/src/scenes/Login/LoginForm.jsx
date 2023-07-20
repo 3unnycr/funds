@@ -8,34 +8,31 @@ import { LoginOutlined } from "@ant-design/icons"
 import {Link} from "react-router-dom";
 
 const LoginForm = () => {
-  const [loginUser , {data, isLoading, error, isError, isSuccess}] = useLoginUserMutation();
-
-  if(isError){
-    console.log(error);
-    toast.error(error.data.error, {
-      toastId: "error",
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-  }
-  if(isSuccess){
-    sessionStorage.setItem("token", data.token);
-    window.location.href = "/authchecker";
-  }
-
+  const [loginUser , {isLoading}] = useLoginUserMutation();
 
   return (
     <div>
 
     <Formik
       initialValues={{email: "", password: ""}}
-      onSubmit={(values) => {
-        loginUser({...values});
+      onSubmit={ async (values) => {
+        const result = await loginUser({...values});
+        if (result.error){
+          toast.error(result.error.data.error, {
+          toastId: "error-cfd",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme:"colored"
+          });
+        }else{
+          sessionStorage.setItem("token", result.data.token);
+          window.location.href = "/authchecker";
+        }
       }}
       validate={values => {
           if(!values.email && !values.password){

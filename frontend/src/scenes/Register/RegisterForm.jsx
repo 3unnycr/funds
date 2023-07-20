@@ -7,34 +7,31 @@ import {Form, Input, SubmitButton} from "formik-antd";
 import { UserAddOutlined } from "@ant-design/icons"
 
 const RegisterForm = () => {
-  const [registerUser , {data, isLoading, error, isError, isSuccess}] = useRegisterUserMutation();
-
-  if(isError){
-    console.log(error);
-    toast.error(error.data.error, {
-      toastId: "error",
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      });
-  }
-  if(isSuccess){
-    sessionStorage.setItem("token", data.token);
-    window.location.href = "/dashboard";
-  }
-
+  const [registerUser , {isLoading}] = useRegisterUserMutation();
 
   return (
     <div>
 
     <Formik
       initialValues={{firstname: "", lastname: "",email: "", password: ""}}
-      onSubmit={(values) => {
-        registerUser({...values});
+      onSubmit={ async (values) => {
+        const result = registerUser({...values});
+        if (result.error){
+          toast.error(result.error.data.error, {
+          toastId: "error-cfd",
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme:"colored"
+          });
+        }else{
+          sessionStorage.setItem("token", result.data.token);
+          window.location.href = "/authchecker";
+        }
       }}
       validate={values => {
 

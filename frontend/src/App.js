@@ -9,7 +9,7 @@ import CompoundFixedDeposit from "./scenes/User/CompoundFixedDeposit/CompoundFix
 import PrivateRoute from "./Routes/PrivateRoute";
 import 'antd/dist/antd.min.css';
 import { ToastContainer} from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.min.css';
 function App() {
   if (sessionStorage.getItem("token")){
 
